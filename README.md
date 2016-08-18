@@ -6,7 +6,7 @@ HackerNews clone built with Feeble and create-feeble-app. Ports from [vue-hacker
 
 ## Build Setup
 
-```
+```bash
 # install dependencies
 npm install
 
