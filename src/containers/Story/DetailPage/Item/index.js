@@ -1,12 +1,13 @@
 import React from 'react'
 import { Link } from 'feeble/router'
 import { host, timeAgo } from '../../../../helpers'
+import { Comment } from '../../../../components'
 import './style.css'
 
 export default function Item({ story }) {
   let title = null
   let hostSpan = null
-  let comment = null
+  let comments = null
 
   if (story.url) {
     title = (
@@ -25,8 +26,10 @@ export default function Item({ story }) {
   }
 
   if (story.kids) {
-    comment = (
-      <ul className="comment-children">Comment</ul>
+    comments = (
+      <ul className="comment-children">
+        {story.kids.map(id => <Comment key={id} id={id} />)}
+      </ul>
     )
   }
 
@@ -45,7 +48,7 @@ export default function Item({ story }) {
         <p className="item-view-comments-header">
           {story.kids ? story.descendants + ' comments' : 'No comments yet.'}
         </p>
-        {comment}
+        {comments}
       </div>
     </div>
   )

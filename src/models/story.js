@@ -105,7 +105,7 @@ export default function factory(type) {
 
   model.selector('one',
     () => Entity.getState().story,
-    props => props.params.id,
+    id => id,
     (stories, id) => stories[id]
   )
 

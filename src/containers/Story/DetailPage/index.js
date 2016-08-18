@@ -21,5 +21,5 @@ class DetailPage extends Component {
 }
 
 export default connect((state, props) => ({
-  story: Story.select('one', props)
+  story: Story.select('one', props.params.id)
 }))(DetailPage)
