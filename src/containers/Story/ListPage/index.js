@@ -9,7 +9,11 @@ export default function createListPage(type) {
 
   class ListPage extends Component {
     componentWillMount() {
-      this.props.dispatch(Story.fetch())
+      this.props.dispatch(Story.watch())
+    }
+
+    componentWillUnmount() {
+      this.props.dispatch(Story.unwatch())
     }
 
     render() {

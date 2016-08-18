@@ -6,10 +6,25 @@ const db = firebase.initializeApp({
 
 function fetch(path) {
   return new Promise(resolve => {
-    db.ref(`/v0/${path}`).once('value', function(snapshot) {
+    db.ref(`/v0/${path}`).once('value', snapshot => {
       resolve(snapshot.val())
     })
   })
+}
+
+function watch(path, cb) {
+  const ref = db.ref(`/v0/${path}`)
+  const handler = snapshot => {
+    cb(snapshot.val())
+  }
+  ref.on('value', handler)
+  return () => {
+    ref.off('value', handler)
+  }
+}
+
+export function watchIdsByType(type, cb) {
+  return watch(`${type}stories`, cb)
 }
 
 export function fetchIdsByType(type) {

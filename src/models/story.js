@@ -1,7 +1,7 @@
 import feeble from 'feeble'
-import { call, put } from 'feeble/effects'
-import { takeEvery } from 'feeble/effects/helper'
-import { fetchIdsByType, fetchStorys } from '../services/db'
+import { fork, take, call, put, race, cancel } from 'feeble/effects'
+import { eventChannel } from 'feeble/effects/helper'
+import { watchIdsByType, fetchStorys } from '../services/db'
 
 const models = []
 const PER_PAGE = 20
@@ -20,22 +20,50 @@ export default function factory(type) {
 
   models[type] = model
 
-  model.action('fetch')
-  model.action('fetchDone')
+  model.action('watch')
+  model.action('unwatch')
+  model.action('setData')
 
   model.reducer(on => {
-    on(model.fetchDone, (state, payload) => ({
+    on(model.setData, (state, payload) => ({
       ...state,
       data: payload,
     }))
   })
 
-  model.effect(function* () {
-    yield* takeEvery(model.fetch, function* () {
-      const ids = yield call(fetchIdsByType, type)
-      const storys = yield call(fetchStorys, ids)
-      yield put(model.fetchDone(storys))
+  function listChannel() {
+    return eventChannel(emitter => {
+      const unwatch = watchIdsByType(type, ids => {
+        emitter(ids)
+      })
+
+      return unwatch
     })
+  }
+
+  function* watchList() {
+    const chan = yield call(listChannel)
+    while (true) {
+      const ids = yield take(chan)
+      const storys = yield call(fetchStorys, ids)
+      yield put(model.setData(storys))
+    }
+  }
+
+  model.effect(function* () {
+    let lastTask
+    while (true) {
+      const { watch } = yield race({
+        watch: take(model.watch),
+        unwatch: take(model.unwatch),
+      })
+      if (lastTask) {
+        yield cancel(lastTask)
+      }
+      if (watch) {
+        lastTask = yield fork(watchList)
+      }
+    }
   })
 
   model.selector('activeStories',
