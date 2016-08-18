@@ -11,6 +11,7 @@
     "feeble": "^0.1.2",
     "firebase": "^3.3.0",
     "react": "^15.3.0",
+    "react-addons-css-transition-group": "^15.3.0",
     "react-dom": "^15.3.0"
   },
   "scripts": {

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import './style.css';
 
 export default function App({ children }) {
@@ -19,7 +20,13 @@ export default function App({ children }) {
           </a>
         </div>
       </div>
-      {children}
+      <ReactCSSTransitionGroup
+        transitionName="fade"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300}
+      >
+        {children}
+      </ReactCSSTransitionGroup>
     </div>
   );
 }

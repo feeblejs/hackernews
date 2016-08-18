@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'feeble/router'
 import Item from './Item'
 import './style.css'
@@ -28,11 +29,23 @@ export default function List({ stories, page, maxPage }) {
         <span>{page || 1}/{maxPage}</span>
         {more}
       </div>
-      <div className="news-list">
-        <ul>
-          {stories.map(story => <Item key={story.id} story={story} />)}
-        </ul>
-      </div>
+      <ReactCSSTransitionGroup
+        transitionName="slide-left"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300}
+      >
+        <div className="news-list">
+          <ul>
+            <ReactCSSTransitionGroup
+              transitionName="item"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={300}
+            >
+              {stories.map(story => <Item key={story.id} story={story} />)}
+            </ReactCSSTransitionGroup>
+          </ul>
+        </div>
+      </ReactCSSTransitionGroup>
     </div>
   )
 }
