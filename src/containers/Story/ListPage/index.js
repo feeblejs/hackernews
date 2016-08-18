@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import TransitionGroup from 'react-addons-css-transition-group'
 import { connect } from 'feeble'
 import storyFactory from '../../../models/story'
 import List from './List'
@@ -20,13 +19,7 @@ export default function createListPage(type) {
       const { stories, maxPage, params: { page } } = this.props
 
       return (
-        <TransitionGroup
-          transitionName="slide-left"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-        >
-          <List type={type} stories={stories} page={page} maxPage={maxPage} />
-        </TransitionGroup>
+        <List type={type} stories={stories} page={page} maxPage={maxPage} />
       )
     }
   }
