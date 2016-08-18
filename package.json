@@ -22,7 +22,9 @@
     "start": "feeble-scripts start",
     "build": "feeble-scripts build",
     "eject": "feeble-scripts eject",
-    "test": "feeble-scripts test"
+    "test": "feeble-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "cd build && git init && git commit --allow-empty -m 'Update' && git checkout -b gh-pages && git add . && git commit -am 'Update' && git push git@github.com:feeblejs/hackernews gh-pages --force"
   },
   "eslintConfig": {
     "extends": "./node_modules/feeble-scripts/config/eslint.js"
