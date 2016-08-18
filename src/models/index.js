@@ -1,5 +1,6 @@
 import Entity from './entity'
 import storyFactory from './story'
+import User from './user'
 
 export default [
   Entity,
@@ -8,4 +9,5 @@ export default [
   storyFactory('show'),
   storyFactory('ask'),
   storyFactory('jobs'),
+  User,
 ]

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { Router, Route, IndexRedirect } from 'feeble/router'
 import App from '../containers/App'
 import * as Story from '../containers/Story'
+import * as User from '../containers/User'
 
 export default function routes({ history }) {
   return (
@@ -14,6 +15,7 @@ export default function routes({ history }) {
         <Route path="ask(/:page)" component={Story.createListPage('ask')} />
         <Route path="job(/:page)" component={Story.createListPage('job')} />
         <Route path="items/:id" component={Story.DetailPage} />
+        <Route path="users/:id" component={User.DetailPage} />
       </Route>
     </Router>
   )

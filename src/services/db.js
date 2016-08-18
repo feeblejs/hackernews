@@ -38,3 +38,7 @@ export function fetchStory(id) {
 export function fetchStorys(ids) {
   return Promise.all(ids.map(id => fetchStory(id)))
 }
+
+export function fetchUser(id) {
+  return fetch(`user/${id}`)
+}

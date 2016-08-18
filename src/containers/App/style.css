@@ -57,6 +57,7 @@ a {
   vertical-align: middle;
 }
 .view {
+  padding-top: 110px;
   max-width: 800px;
   margin: 0 auto;
   position: relative;

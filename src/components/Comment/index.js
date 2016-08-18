@@ -67,7 +67,7 @@ class Comment extends Component {
     return (
       <li className="comment">
         <div className="by">
-          <Link to={`/user/${comment.by}`}>{comment.by}</Link>
+          <Link to={`/users/${comment.by}`}>{comment.by}</Link>
           {timeAgo(comment.time)} ago
           {openLink}
         </div>

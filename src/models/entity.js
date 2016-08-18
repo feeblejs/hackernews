@@ -5,6 +5,7 @@ const model = feeble.model({
   namespace: 'entity',
   state: {
     story: {},
+    user: {},
   },
 })
 

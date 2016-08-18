@@ -40,7 +40,7 @@ export default function Item({ story }) {
         {hostSpan}
         <p className="meta">
           {story.score} points
-          | by <Link to={`/user/${story.by}`}>{story.by}</Link>
+          | by <Link to={`/users/${story.by}`}>{story.by}</Link>
           {timeAgo(story.time)} ago
         </p>
       </div>

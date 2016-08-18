@@ -42,7 +42,7 @@ export default function Item({ story }) {
       <br />
       <span className="meta">
         <span className="by">
-          by <Link to={`/user/${story.by}`} className="">{story.by}</Link>
+          by <Link to={`/users/${story.by}`} className="">{story.by}</Link>
         </span>
         <span className="time">
           {timeAgo(story.time)} ago
