@@ -25,7 +25,7 @@ export default function createListPage(type) {
   }
 
   return connect((state, props) => ({
-    stories: Story.select('activeStories', props),
+    stories: Story.select('list', props),
     maxPage: Story.select('maxPage'),
   }))(ListPage)
 }

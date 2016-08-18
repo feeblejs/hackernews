@@ -13,6 +13,7 @@ export default function routes({ history }) {
         <Route path="show(/:page)" component={Story.createListPage('show')} />
         <Route path="ask(/:page)" component={Story.createListPage('ask')} />
         <Route path="job(/:page)" component={Story.createListPage('job')} />
+        <Route path="items/:id" component={Story.DetailPage} />
       </Route>
     </Router>
   )

@@ -1,7 +1,10 @@
 import feeble from 'feeble'
 import { fork, take, call, put, race, cancel } from 'feeble/effects'
-import { eventChannel } from 'feeble/effects/helper'
-import { watchIdsByType, fetchStorys } from '../services/db'
+import { takeEvery, eventChannel } from 'feeble/effects/helper'
+import { normalize } from 'normalizr'
+import Schemas from '../config/schemas'
+import { watchIdsByType, fetchStorys, fetchStory } from '../services/db'
+import Entity from './entity'
 
 const models = []
 const PER_PAGE = 20
@@ -15,7 +18,6 @@ export default function factory(type) {
     namespace: `story::${type}`,
     state: {
       ids: [],
-      items: [],
     },
   })
 
@@ -24,17 +26,12 @@ export default function factory(type) {
   model.action('watch')
   model.action('unwatch')
   model.action('setIds')
-  model.action('setItems')
+  model.action('fetchOne')
 
   model.reducer(on => {
     on(model.setIds, (state, payload) => ({
       ...state,
       ids: payload,
-    }))
-
-    on(model.setItems, (state, payload) => ({
-      ...state,
-      items: payload,
     }))
   })
 
@@ -48,17 +45,18 @@ export default function factory(type) {
     })
   }
 
-  function* watchList() {
+  function* doWatchList() {
     const chan = yield call(listChannel)
     while (true) {
       const ids = yield take(chan)
-      yield put(model.setIds(ids))
       const storys = yield call(fetchStorys, ids)
-      yield put(model.setItems(storys))
+      const normalized = normalize(storys, Schemas.STORY_ARRAY)
+      yield put(Entity.update(normalized))
+      yield put(model.setIds(normalized.result))
     }
   }
 
-  model.effect(function* () {
+  function* watchList() {
     let lastTask
     while (true) {
       const { watch } = yield race({
@@ -69,24 +67,46 @@ export default function factory(type) {
         yield cancel(lastTask)
       }
       if (watch) {
-        lastTask = yield fork(watchList)
+        lastTask = yield fork(doWatchList)
       }
     }
+  }
+
+  function* fetchItem() {
+    yield* takeEvery(model.fetchOne, function* ({ payload }) {
+      const story = yield call(fetchStory, payload)
+      const normalized = normalize(story, Schemas.STORY)
+      yield put(Entity.update(normalized))
+    })
+  }
+
+  model.effect(function* () {
+    yield [
+      fork(watchList),
+      fork(fetchItem),
+    ]
   })
 
-  model.selector('activeStories',
-    props => model.getState().items,
-    props => props.params.page || 1,
-    (stories, page) => {
+  model.selector('list',
+    () => Entity.getState().story,
+    props => {
+      const page = props.params.page || 1
       const start = (page - 1) * PER_PAGE
       const end = page * PER_PAGE
-      return stories.slice(start, end)
-    }
+      return model.getState().ids.slice(start, end)
+    },
+    (stories, ids) => ids.map(id => stories[id])
   )
 
   model.selector('maxPage',
     () => model.getState().ids,
     ids => Math.ceil(ids.length / PER_PAGE)
+  )
+
+  model.selector('one',
+    () => Entity.getState().story,
+    props => props.params.id,
+    (stories, id) => stories[id]
   )
 
   return model
