@@ -1,5 +1,9 @@
-import Story from './story'
+import storyFactory from './story'
 
 export default [
-  Story
+  storyFactory('top'),
+  storyFactory('new'),
+  storyFactory('show'),
+  storyFactory('ask'),
+  storyFactory('jobs'),
 ]

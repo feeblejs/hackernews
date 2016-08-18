@@ -1,5 +1,5 @@
-import ListPage from './ListPage'
+import createListPage from './ListPage'
 
 export {
-  ListPage
+  createListPage
 }

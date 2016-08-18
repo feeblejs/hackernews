@@ -4,20 +4,20 @@ import { Link } from 'feeble/router'
 import Item from './Item'
 import './style.css'
 
-export default function List({ stories, page, maxPage }) {
+export default function List({ type, stories, page, maxPage }) {
   page = +(page || 1)
 
   let prev
   let more
 
   if (page > 1) {
-    prev = <Link to={`/top/${page - 1}`}>&lt; prev</Link>
+    prev = <Link to={`/${type}/${page - 1}`}>&lt; prev</Link>
   } else {
     prev = <a className="disabled">&lt; prev</a>
   }
 
   if (page < maxPage) {
-    more = <Link to={`/top/${page + 1}`}>more &gt;</Link>
+    more = <Link to={`/${type}/${page + 1}`}>more &gt;</Link>
   } else {
     more = <a className="disabled">more &gt;</a>
   }

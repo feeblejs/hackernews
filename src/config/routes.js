@@ -8,8 +8,11 @@ export default function routes({ history }) {
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRedirect to="top" />
-        <Route path="top" component={Story.ListPage} />
-        <Route path="top/:page" component={Story.ListPage} />
+        <Route path="top(/:page)" component={Story.createListPage('top')} />
+        <Route path="new(/:page)" component={Story.createListPage('new')} />
+        <Route path="show(/:page)" component={Story.createListPage('show')} />
+        <Route path="ask(/:page)" component={Story.createListPage('ask')} />
+        <Route path="job(/:page)" component={Story.createListPage('job')} />
       </Route>
     </Router>
   )

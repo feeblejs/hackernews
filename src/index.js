@@ -9,6 +9,10 @@ const app = feeble()
 
 app.model(...models)
 
+if (process.env.NODE_ENV === 'development') {
+  app.middleware(require('redux-logger')())
+}
+
 app.router(routes)
 
 const tree = app.start()
