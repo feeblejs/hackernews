@@ -9,14 +9,15 @@ class ListPage extends Component {
   }
 
   render() {
-    const { stories } = this.props
+    const { stories, maxPage, params: { page } } = this.props
 
     return (
-      <List stories={stories} />
+      <List stories={stories} page={page} maxPage={maxPage} />
     )
   }
 }
 
-export default connect(() => ({
-  stories: Story.getState().data
+export default connect((state, props) => ({
+  stories: Story.select('activeStories', props),
+  maxPage: Story.select('maxPage'),
 }))(ListPage)
