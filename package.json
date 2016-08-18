@@ -1,0 +1,25 @@
+{
+  "name": "feeble-hackernews",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "feeble-scripts": "0.3.0-alpha4",
+    "react-test-renderer": "^15.3.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.13.0",
+    "feeble": "^0.1.2",
+    "firebase": "^3.3.0",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0"
+  },
+  "scripts": {
+    "start": "feeble-scripts start",
+    "build": "feeble-scripts build",
+    "eject": "feeble-scripts eject",
+    "test": "feeble-scripts test"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/feeble-scripts/config/eslint.js"
+  }
+}
