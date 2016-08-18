@@ -2,7 +2,7 @@
   "name": "feeble-hackernews",
   "version": "0.0.1",
   "private": true,
-  "homepage": "https://feeblejs.github.io/hackernews",
+  "homepage": "https://feeble-hackernew.herokuapp.com",
   "devDependencies": {
     "feeble-scripts": "0.3.0-alpha4",
     "react-test-renderer": "^15.3.0",
@@ -22,9 +22,7 @@
     "start": "feeble-scripts start",
     "build": "feeble-scripts build",
     "eject": "feeble-scripts eject",
-    "test": "feeble-scripts test",
-    "predeploy": "npm run build",
-    "deploy": "cd build && git init && git commit --allow-empty -m 'Update' && git checkout -b gh-pages && git add . && git commit -am 'Update' && git push git@github.com:feeblejs/hackernews gh-pages --force"
+    "test": "feeble-scripts test"
   },
   "eslintConfig": {
     "extends": "./node_modules/feeble-scripts/config/eslint.js"
