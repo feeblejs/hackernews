@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import TransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'feeble/router'
 import './style.css';
 
@@ -21,13 +21,13 @@ export default function App({ children }) {
           </a>
         </div>
       </div>
-      <ReactCSSTransitionGroup
+      <TransitionGroup
         transitionName="fade"
         transitionEnterTimeout={500}
         transitionLeaveTimeout={300}
       >
         {children}
-      </ReactCSSTransitionGroup>
+      </TransitionGroup>
     </div>
   );
 }
