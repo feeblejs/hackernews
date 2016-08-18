@@ -14,7 +14,8 @@ export default function factory(type) {
   const model = feeble.model({
     namespace: `story::${type}`,
     state: {
-      data: [],
+      ids: [],
+      items: [],
     },
   })
 
@@ -22,12 +23,18 @@ export default function factory(type) {
 
   model.action('watch')
   model.action('unwatch')
-  model.action('setData')
+  model.action('setIds')
+  model.action('setItems')
 
   model.reducer(on => {
-    on(model.setData, (state, payload) => ({
+    on(model.setIds, (state, payload) => ({
       ...state,
-      data: payload,
+      ids: payload,
+    }))
+
+    on(model.setItems, (state, payload) => ({
+      ...state,
+      items: payload,
     }))
   })
 
@@ -45,8 +52,9 @@ export default function factory(type) {
     const chan = yield call(listChannel)
     while (true) {
       const ids = yield take(chan)
+      yield put(model.setIds(ids))
       const storys = yield call(fetchStorys, ids)
-      yield put(model.setData(storys))
+      yield put(model.setItems(storys))
     }
   }
 
@@ -67,7 +75,7 @@ export default function factory(type) {
   })
 
   model.selector('activeStories',
-    props => model.getState().data,
+    props => model.getState().items,
     props => props.params.page || 1,
     (stories, page) => {
       const start = (page - 1) * PER_PAGE
@@ -77,8 +85,8 @@ export default function factory(type) {
   )
 
   model.selector('maxPage',
-    () => model.getState().data,
-    stories => Math.ceil(stories.length / PER_PAGE)
+    () => model.getState().ids,
+    ids => Math.ceil(ids.length / PER_PAGE)
   )
 
   return model
