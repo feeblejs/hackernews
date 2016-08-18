@@ -2,6 +2,7 @@
   "name": "feeble-hackernews",
   "version": "0.0.1",
   "private": true,
+  "homepage": "http://feeblejs.github.io/hackernews",
   "devDependencies": {
     "feeble-scripts": "0.3.0-alpha4",
     "react-test-renderer": "^15.3.0",
