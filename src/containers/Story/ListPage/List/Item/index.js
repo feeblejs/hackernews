@@ -5,6 +5,7 @@ import './style.css'
 
 export default function Item({ story }) {
   let title = null
+  let author = null
   let commentLink = null
   let label = null
 
@@ -24,6 +25,12 @@ export default function Item({ story }) {
   }
 
   if (story.type !== 'job') {
+    author = (
+      <span className="by">
+        by <Link to={`/users/${story.by}`} className="">{story.by}</Link>
+      </span>
+    )
+
     commentLink = (
       <span className="comments-link">
         | <Link to={`/items/${story.id}`}>{story.descendants} comments</Link>
@@ -32,7 +39,7 @@ export default function Item({ story }) {
   }
 
   if (story.type !== 'story') {
-    label = <span className="label">{story.type}</span>
+    label = <span className="label"> {story.type}</span>
   }
 
   return (
@@ -41,15 +48,13 @@ export default function Item({ story }) {
       {title}
       <br />
       <span className="meta">
-        <span className="by">
-          by <Link to={`/users/${story.by}`} className="">{story.by}</Link>
-        </span>
+        {author}
         <span className="time">
           {timeAgo(story.time)} ago
         </span>
         {commentLink}
-        {label}
       </span>
+      {label}
     </li>
   )
 }
