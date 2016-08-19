@@ -1,12 +1,14 @@
 import React, { PropTypes } from 'react'
-import { Router, Route, IndexRedirect } from 'feeble/router'
+import { applyRouterMiddleware, Router, Route, IndexRedirect } from 'feeble/router'
+import { useScroll } from 'react-router-scroll'
 import App from '../containers/App'
 import * as Story from '../containers/Story'
 import * as User from '../containers/User'
 
+
 export default function routes({ history }) {
   return (
-    <Router history={history}>
+    <Router history={history} render={applyRouterMiddleware(useScroll())}>
       <Route path="/" component={App}>
         <IndexRedirect to="top" />
         <Route path="top(/:page)" component={Story.createListPage('top')} />
