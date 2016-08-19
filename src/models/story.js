@@ -51,7 +51,7 @@ export default function factory(type) {
       const ids = yield take(chan)
       const storys = yield call(fetchStorys, ids)
       const normalized = normalize(storys, Schemas.STORY_ARRAY)
-      yield put(Entity.update(normalized))
+      yield put(Entity.set(normalized))
       yield put(model.setIds(normalized.result))
     }
   }
@@ -76,7 +76,7 @@ export default function factory(type) {
     yield* takeEvery(model.fetchOne, function* ({ payload }) {
       const story = yield call(fetchStory, payload)
       const normalized = normalize(story, Schemas.STORY)
-      yield put(Entity.update(normalized))
+      yield put(Entity.set(normalized))
     })
   }
 

@@ -9,10 +9,10 @@ const model = feeble.model({
   },
 })
 
-model.action('update')
+model.action('set')
 
 model.reducer(on => {
-  on(model.update, (state, payload) => merge(state, payload.entities))
+  on(model.set, (state, payload) => merge(state, payload.entities))
 })
 
 export default model

@@ -17,7 +17,7 @@ model.effect(function* () {
   yield* takeLatest(model.fetchOne, function* ({ payload }) {
     const user = yield call(fetchUser, payload)
     const normalized = normalize(user, Schemas.USER)
-    yield put(Entity.update(normalized))
+    yield put(Entity.set(normalized))
   })
 })
 
