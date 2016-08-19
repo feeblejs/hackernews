@@ -31,12 +31,12 @@ export function fetchIdsByType(type) {
   return fetch(`${type}stories`)
 }
 
-export function fetchStory(id) {
+export function fetchItem(id) {
   return fetch(`item/${id}`)
 }
 
-export function fetchStorys(ids) {
-  return Promise.all(ids.map(id => fetchStory(id)))
+export function fetchItems(ids) {
+  return Promise.all(ids.map(id => fetchItem(id)))
 }
 
 export function fetchUser(id) {

@@ -3,7 +3,7 @@ import { fork, take, call, put, race, cancel } from 'feeble/effects'
 import { takeEvery, eventChannel } from 'feeble/effects/helper'
 import { normalize } from 'normalizr'
 import Schemas from '../config/schemas'
-import { watchIdsByType, fetchStorys, fetchStory } from '../services/db'
+import { watchIdsByType, fetchItems, fetchItem } from '../services/db'
 import Entity from './entity'
 
 const models = []
@@ -56,7 +56,7 @@ export default function factory(type) {
     const chan = yield call(listChannel)
     while (true) {
       const ids = yield take(chan)
-      const storys = yield call(fetchStorys, ids)
+      const storys = yield call(fetchItems, ids)
       const normalized = normalize(storys, Schemas.STORY_ARRAY)
       yield put(Entity.set(normalized))
       yield put(model.setIds(normalized.result))
@@ -79,9 +79,9 @@ export default function factory(type) {
     }
   }
 
-  function* fetchItem() {
+  function* fetchOne() {
     yield* takeEvery(model.fetchOne, function* ({ payload }) {
-      const story = yield call(fetchStory, payload)
+      const story = yield call(fetchItem, payload)
       const normalized = normalize(story, Schemas.STORY)
       yield put(Entity.set(normalized))
     })
@@ -90,7 +90,7 @@ export default function factory(type) {
   model.effect(function* () {
     yield [
       fork(watchList),
-      fork(fetchItem),
+      fork(fetchOne),
     ]
   })
 
