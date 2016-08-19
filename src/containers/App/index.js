@@ -4,7 +4,22 @@ import { Link } from 'feeble/router'
 import './style.css'
 import logo from './logo.png'
 
-export default function App({ children }) {
+const types = {
+  top: 'Top',
+  new: 'New',
+  show: 'Show',
+  ask: 'Ask',
+  job: 'Jobs',
+}
+
+export default function App({ location, children }) {
+  const links = Object.keys(types).map(key => {
+    const path = `/${key}`
+    const active = location.pathname.indexOf(path) === 0
+    const className = active ? "router-link-active" : ""
+    return <Link key={key} to={path} className={className}>{types[key]}</Link>
+  })
+
   return (
     <div id="app">
       <div className="header">
@@ -12,11 +27,7 @@ export default function App({ children }) {
           <Link to="/">
             <img src={logo} alt="logo" className="logo" />
           </Link>
-          <Link to="/top" activeClassName="router-link-active">Top</Link>
-          <Link to="/new" activeClassName="router-link-active">New</Link>
-          <Link to="/show" activeClassName="router-link-active">Show</Link>
-          <Link to="/ask" activeClassName="router-link-active">Ask</Link>
-          <Link to="/job" activeClassName="router-link-active">Jobs</Link>
+          {links}
           <a href="https://github.com/feeblejs/hackernews" target="_blank" className="github">
             Built with Feeble
           </a>
