@@ -17,7 +17,7 @@ export default function App({ children }) {
           <Link to="/show" activeClassName="router-link-active">Show</Link>
           <Link to="/ask" activeClassName="router-link-active">Ask</Link>
           <Link to="/job" activeClassName="router-link-active">Jobs</Link>
-          <a href="https://github.com/feeble/feeble-hackernews" target="_blank" className="github">
+          <a href="https://github.com/feeble/hackernews" target="_blank" className="github">
             Built with Feeble
           </a>
         </div>
