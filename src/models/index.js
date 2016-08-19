@@ -8,6 +8,6 @@ export default [
   storyFactory('new'),
   storyFactory('show'),
   storyFactory('ask'),
-  storyFactory('jobs'),
+  storyFactory('job'),
   User,
 ]
