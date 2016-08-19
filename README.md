@@ -2,7 +2,13 @@
 
 HackerNews clone built with Feeble and create-feeble-app. Ports from [vue-hackernews-2.0](https://github.com/vuejs/vue-hackernews-2.0).
 
-[Live Demo](https://feeble-hackernew.herokuapp.com)
+<p align="center">
+  <a href="https://feeble-hackernew.herokuapp.com" target="_blank">
+    <img src="https://raw.githubusercontent.com/feeblejs/hackernews/master/screenshot.png" width="700px">
+    <br>
+    Live Demo
+  </a>
+</p>
 
 ## Build Setup
 
