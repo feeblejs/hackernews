@@ -17,6 +17,7 @@ export default function factory(type) {
   const model = feeble.model({
     namespace: `story::${type}`,
     state: {
+      loading: false,
       ids: [],
     },
   })
@@ -29,8 +30,14 @@ export default function factory(type) {
   model.action('fetchOne')
 
   model.reducer(on => {
+    on(model.watch, (state, payload) => ({
+      ...state,
+      loading: true,
+    }))
+
     on(model.setIds, (state, payload) => ({
       ...state,
+      loading: false,
       ids: payload,
     }))
   })

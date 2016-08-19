@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import TransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'feeble/router'
+import { Placeholder } from '../../../../components'
 import Item from './Item'
 import './style.css'
 
@@ -23,10 +24,12 @@ export default class List extends Component {
   }
 
   render() {
-    const { type, stories, maxPage } = this.props
+    const { type, stories, maxPage, loading } = this.props
 
-    let prev
-    let more
+    let prev = null
+    let more = null
+    let items = null
+
 
     if (this.page > 1) {
       prev = <Link to={`/${type}/${this.page - 1}`}>&lt; prev</Link>
@@ -38,6 +41,25 @@ export default class List extends Component {
       more = <Link to={`/${type}/${this.page + 1}`}>more &gt;</Link>
     } else {
       more = <a className="disabled">more &gt;</a>
+    }
+
+    if (stories.length <= 0 && loading) {
+      items = (
+        <ul>
+          {Array(20).fill(1).map((_, i) => <Placeholder key={i} />)}
+        </ul>
+      )
+    } else {
+      items = (
+        <TransitionGroup
+          component="ul"
+          transitionName="item"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+        >
+          {stories.map(story => <Item key={story.id} story={story} />)}
+        </TransitionGroup>
+      )
     }
 
     return (
@@ -53,14 +75,7 @@ export default class List extends Component {
           transitionLeaveTimeout={300}
         >
           <div key={this.page} className="news-list">
-            <TransitionGroup
-              component="ul"
-              transitionName="item"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={300}
-            >
-              {stories.map(story => <Item key={story.id} story={story} />)}
-            </TransitionGroup>
+            {items}
           </div>
         </TransitionGroup>
       </div>

@@ -16,10 +16,16 @@ export default function createListPage(type) {
     }
 
     render() {
-      const { stories, maxPage, params: { page } } = this.props
+      const { stories, maxPage, loading, params: { page } } = this.props
 
       return (
-        <List type={type} stories={stories} page={page} maxPage={maxPage} />
+        <List
+          type={type}
+          stories={stories}
+          page={page}
+          maxPage={maxPage}
+          loading={loading}
+        />
       )
     }
   }
@@ -27,5 +33,6 @@ export default function createListPage(type) {
   return connect((state, props) => ({
     stories: Story.select('list', props),
     maxPage: Story.select('maxPage'),
+    loading: Story.getState().loading,
   }))(ListPage)
 }
