@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { applyRouterMiddleware, Router, Route, IndexRedirect } from 'feeble/router'
+import { applyRouterMiddleware, Router, Route, IndexRedirect } from 'feeble-router'
 import { useScroll } from 'react-router-scroll'
 import App from '../containers/App'
 import * as Story from '../containers/Story'

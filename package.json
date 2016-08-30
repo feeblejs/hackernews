@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.13.0",
-    "feeble": "^0.1.2",
+    "feeble": "^0.3.0",
+    "feeble-router": "^0.1.0",
     "firebase": "^3.3.0",
     "lodash": "^4.15.0",
     "normalizr": "^2.2.1",

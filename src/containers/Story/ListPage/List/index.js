@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import TransitionGroup from 'react-addons-css-transition-group'
-import { Link } from 'feeble/router'
+import { Link } from 'feeble-router'
 import { Placeholder } from '../../../../components'
 import Item from './Item'
 import './style.css'

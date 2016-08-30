@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'feeble/router'
+import { Link } from 'feeble-router'
 import { host, timeAgo } from '../../../../helpers'
 import { Comment } from '../../../../components'
 import './style.css'

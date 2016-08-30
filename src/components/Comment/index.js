@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'feeble'
-import { Link } from 'feeble/router'
+import { Link } from 'feeble-router'
 import storyFactory from '../../models/story'
 import { timeAgo } from '../../helpers'
 import './style.css'

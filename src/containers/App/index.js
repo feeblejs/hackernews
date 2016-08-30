@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import TransitionGroup from 'react-addons-css-transition-group'
-import { Link } from 'feeble/router'
+import { Link } from 'feeble-router'
 import './style.css'
 import logo from './logo.png'
 
