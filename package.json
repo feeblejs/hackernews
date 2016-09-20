@@ -13,6 +13,7 @@
     "feeble": "^0.3.0",
     "feeble-router": "^0.1.0",
     "firebase": "^3.3.0",
+    "immutable": "^3.8.1",
     "lodash": "^4.15.0",
     "normalizr": "^2.2.1",
     "react": "^15.3.0",

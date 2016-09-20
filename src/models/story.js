@@ -5,6 +5,7 @@ import { normalize } from 'normalizr'
 import Schemas from '../config/schemas'
 import { watchIdsByType, fetchItems, fetchItem } from '../services/db'
 import Entity from './entity'
+import Immutable from 'immutable'
 
 const models = []
 const PER_PAGE = 20
@@ -16,10 +17,10 @@ export default function factory(type) {
 
   const model = feeble.model({
     namespace: `story::${type}`,
-    state: {
+    state: Immutable.fromJS({
       loading: false,
       ids: [],
-    },
+    }),
   })
 
   models[type] = model
@@ -30,13 +31,9 @@ export default function factory(type) {
   model.action('fetchOne')
 
   model.reducer(on => {
-    on(model.watch, (state, payload) => ({
-      ...state,
-      loading: true,
-    }))
+    on(model.watch, (state, payload) => state.setIn('loading', true))
 
-    on(model.setIds, (state, payload) => ({
-      ...state,
+    on(model.setIds, (state, payload) => state.merge({
       loading: false,
       ids: payload,
     }))
@@ -95,25 +92,25 @@ export default function factory(type) {
   })
 
   model.selector('list',
-    () => Entity.getState().story,
+    () => Entity.getState().get('story'),
     props => {
       const page = props.params.page || 1
       const start = (page - 1) * PER_PAGE
       const end = page * PER_PAGE
-      return model.getState().ids.slice(start, end)
+      return model.getState().get('ids').slice(start, end)
     },
-    (stories, ids) => ids.map(id => stories[id])
+    (stories, ids) => ids.map(id => stories.get(id.toString()))
   )
 
   model.selector('maxPage',
-    () => model.getState().ids,
-    ids => Math.ceil(ids.length / PER_PAGE)
+    () => model.getState().get('ids'),
+    ids => Math.ceil(ids.count() / PER_PAGE)
   )
 
   model.selector('one',
-    () => Entity.getState().story,
+    () => Entity.getState().get('story'),
     id => id,
-    (stories, id) => stories[id]
+    (stories, id) => stories.get(id.toString())
   )
 
   return model

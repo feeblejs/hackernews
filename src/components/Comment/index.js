@@ -46,11 +46,11 @@ class Comment extends Component {
     let openLink = null
     let comments = null
 
-    if (comment.kids && comment.kids.length > 0) {
+    if (comment.get('kids') && comment.get('kids').length > 0) {
       openLink = (
         <span>
           | <a className="expand" onClick={this.handleClick}>
-            {open ? 'collapse ' : 'expand ' + pluralize(comment.kids.length)}
+            {open ? 'collapse ' : 'expand ' + pluralize(comment.get('kids').length)}
           </a>
         </span>
       )
@@ -59,7 +59,7 @@ class Comment extends Component {
     if (open) {
       comments = (
         <ul className="comment-children">
-          {comment.kids.map(id => <ConnectedComment key={id} id={id} />)}
+          {comment.get('kids').map(id => <ConnectedComment key={id} id={id} />)}
         </ul>
       )
     }
@@ -67,11 +67,11 @@ class Comment extends Component {
     return (
       <li className="comment">
         <div className="by">
-          <Link to={`/users/${comment.by}`}>{comment.by}</Link>
-          {timeAgo(comment.time)} ago
+          <Link to={`/users/${comment.by}`}>{comment.get('by')}</Link>
+          {timeAgo(comment.get('time'))} ago
           {openLink}
         </div>
-        <div className="text" dangerouslySetInnerHTML={{__html: comment.text}} />
+        <div className="text" dangerouslySetInnerHTML={{__html: comment.get('text')}} />
         {comments}
       </li>
     )

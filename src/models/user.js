@@ -5,10 +5,11 @@ import { normalize } from 'normalizr'
 import Schemas from '../config/schemas'
 import { fetchUser } from '../services/db'
 import Entity from './entity'
+import Immutable from 'immutable'
 
 const model = feeble.model({
   namespace: 'user',
-  state: {},
+  state: Immutable.fromJS({}),
 })
 
 model.action('fetchOne')
@@ -22,9 +23,9 @@ model.effect(function* () {
 })
 
 model.selector('one',
-  () => Entity.getState().user,
+  () => Entity.getState().get('user'),
   id => id,
-  (users, id) => users[id]
+  (users, id) => users.get(id.toString())
 )
 
 export default model
